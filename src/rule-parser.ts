@@ -5,6 +5,7 @@ import NumberRule from "./rules/number.ts";
 import BooleanRule from "./rules/boolean.ts";
 import RequiredRule from "./rules/required.ts";
 import minFactory from "./rules/min.ts";
+import maxFactory from "./rules/max.ts";
 
 /**
  * Parses and manages validation rules.
@@ -129,5 +130,6 @@ export default class RuleParser {
    */
   private registerDefaultFactories(): void {
     this.registerFactory("min", minFactory);
+    this.registerFactory("max", maxFactory);
   }
 }
