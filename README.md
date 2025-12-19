@@ -3,13 +3,13 @@
 </p>
 
 <p align="center">
-  <a href="https://github.com/raptor-http/validation/actions"><img src="https://github.com/raptor-http/validation/workflows/ci/badge.svg" alt="Build Status"></a>
-  <a href="jsr.io/@raptor/validation"><img src="https://jsr.io/badges/@raptor/validation?logoColor=3A9D95&color=3A9D95&labelColor=083344" /></a>
-  <a href="jsr.io/@raptor/validation score"><img src="https://jsr.io/badges/@raptor/validation/score?logoColor=3A9D95&color=3A9D95&labelColor=083344" /></a>
+  <a href="https://github.com/raptor-http/validator/actions"><img src="https://github.com/raptor-http/validator/workflows/ci/badge.svg" alt="Build Status"></a>
+  <a href="jsr.io/@raptor/validator"><img src="https://jsr.io/badges/@raptor/validator?logoColor=3A9D95&color=3A9D95&labelColor=083344" /></a>
+  <a href="jsr.io/@raptor/validator score"><img src="https://jsr.io/badges/@raptor/validator/score?logoColor=3A9D95&color=3A9D95&labelColor=083344" /></a>
   <a href="https://jsr.io/@raptor"><img src="https://jsr.io/badges/@raptor?logoColor=3A9D95&color=3A9D95&labelColor=083344" alt="" /></a>
 </p>
 
-## Raptor Validation
+## Raptor Validator
 
 See more information about the Raptor framework here: <a href="https://jsr.io/@raptor/framework">https://jsr.io/@raptor/framework</a>.
 
@@ -25,13 +25,13 @@ To start using the request validation extension, simply install into an existing
 ### Using the Deno CLI
 
 ```
-deno add jsr:@raptor/validation
+deno add jsr:@raptor/validator
 ```
 
 ### Importing with JSR
 
-Validation is also available to import directly via JSR:
-[https://jsr.io/@raptor/validation](https://jsr.io/@raptor/validation)
+Validator is also available to import directly via JSR:
+[https://jsr.io/@raptor/validator](https://jsr.io/@raptor/validator)
 
 ## Documentation
 
