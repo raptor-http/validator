@@ -91,7 +91,7 @@ export default class Validate {
       configurable: false,
     });
   }
-};
+}
 
 /**
  * Get and cache the request body.
@@ -119,4 +119,4 @@ async function getRequestBody(request: Request): Promise<unknown> {
   bodyCache.set(request, body);
 
   return body;
-};
+}
