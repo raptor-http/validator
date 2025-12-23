@@ -47,4 +47,4 @@ export class EndsWithRuleFactory implements RuleFactory {
   }
 }
 
-export default new EndsWithRuleFactory();
+export default new EndsWithRuleFactory() as RuleFactory;

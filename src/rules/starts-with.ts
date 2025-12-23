@@ -47,4 +47,4 @@ export class StartsWithRuleFactory implements RuleFactory {
   }
 }
 
-export default new StartsWithRuleFactory();
+export default new StartsWithRuleFactory() as RuleFactory;
