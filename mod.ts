@@ -17,3 +17,4 @@ export { default as StringRule } from "./src/rules/string.ts";
 export { default as NumberRule } from "./src/rules/number.ts";
 export { default as BooleanRule } from "./src/rules/boolean.ts";
 export { default as MinRule } from "./src/rules/min.ts";
+export { default as MaxRule } from "./src/rules/max.ts";

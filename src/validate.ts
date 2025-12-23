@@ -1,4 +1,4 @@
-import { UnprocessableEntity, type Context } from "../../raptor-framework/mod.ts";
+import { type Context, UnprocessableEntity } from "@raptor/framework";
 
 import Validator from "./validator.ts";
 
@@ -11,7 +11,7 @@ declare global {
       schema: T,
     ): Promise<InferSchema<T>>;
   }
-}
+};
 
 type InferRule<R extends string> = R extends `${string}string${string}` ? string
   : R extends `${string}number${string}` ? number
@@ -76,6 +76,7 @@ export default class Validate {
     Object.defineProperty(request, kValidate, {
       value: async function <T extends Record<string, string>>(schema: T) {
         const body = await getRequestBody(this);
+
         const result = validator.validate(
           body as Record<string, unknown>,
           schema,
@@ -98,7 +99,7 @@ export default class Validate {
       configurable: false,
     });
   }
-}
+};
 
 /**
  * Get and cache the request body.
@@ -126,4 +127,4 @@ async function getRequestBody(request: Request): Promise<unknown> {
   bodyCache.set(request, body);
 
   return body;
-}
+};

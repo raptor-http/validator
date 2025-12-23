@@ -54,7 +54,9 @@ export class MinRuleFactory implements RuleFactory {
     const minimum = parseInt(params[0], 10);
 
     if (isNaN(minimum)) {
-      throw new Error(`min rule requires a numeric parameter, got: ${params[0]}`);
+      throw new Error(
+        `min rule requires a numeric parameter, got: ${params[0]}`,
+      );
     }
 
     return new MinRule(minimum);

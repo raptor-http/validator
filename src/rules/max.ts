@@ -54,7 +54,9 @@ export class MaxRuleFactory implements RuleFactory {
     const maximum = parseInt(params[0], 10);
 
     if (isNaN(maximum)) {
-      throw new Error(`max rule requires a numeric parameter, got: ${params[0]}`);
+      throw new Error(
+        `max rule requires a numeric parameter, got: ${params[0]}`,
+      );
     }
 
     return new MaxRule(maximum);

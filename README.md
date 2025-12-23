@@ -4,9 +4,9 @@
 
 <p align="center">
   <a href="https://github.com/raptor-http/validator/actions"><img src="https://github.com/raptor-http/validator/workflows/ci/badge.svg" alt="Build Status"></a>
-  <a href="jsr.io/@raptor/validator"><img src="https://jsr.io/badges/@raptor/validator?logoColor=3A9D95&color=3A9D95&labelColor=083344" /></a>
-  <a href="jsr.io/@raptor/validator score"><img src="https://jsr.io/badges/@raptor/validator/score?logoColor=3A9D95&color=3A9D95&labelColor=083344" /></a>
-  <a href="https://jsr.io/@raptor"><img src="https://jsr.io/badges/@raptor?logoColor=3A9D95&color=3A9D95&labelColor=083344" alt="" /></a>
+  <a href="jsr.io/@raptor/validator"><img src="https://jsr.io/badges/@raptor/validator" /></a>
+  <a href="jsr.io/@raptor/validator score"><img src="https://jsr.io/badges/@raptor/validator/score" /></a>
+  <a href="https://jsr.io/@raptor"><img src="https://jsr.io/badges/@raptor" alt="" /></a>
 </p>
 
 ## Raptor Validator
