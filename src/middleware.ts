@@ -17,7 +17,7 @@ export type InferSchema<T extends Record<string, string>> = {
 /**
  * Validation middleware for Raptor.
  */
-export default class Validate {
+export default class Middleware {
   /**
    * The validator instance.
    */

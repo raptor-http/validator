@@ -1,17 +1,13 @@
 // Copyright 2025, @briward. All rights reserved. MIT license.
 
-import Validate from "./src/validate.ts";
-import Validator from "./src/validator.ts";
+import Middleware from "./src/middleware.ts";
 import RuleParser from "./src/rule-parser.ts";
 
-// Export rule interfaces and types
 export type { Rule } from "./src/interfaces/rule.ts";
-export type { InferSchema } from "./src/validate.ts";
+export type { InferSchema } from "./src/middleware.ts";
 
-// Export core classes
-export { RuleParser, Validate, Validator };
+export { Middleware as Validator, RuleParser };
 
-// Export built-in rules
 export { default as RequiredRule } from "./src/rules/required.ts";
 export { default as StringRule } from "./src/rules/string.ts";
 export { default as NumberRule } from "./src/rules/number.ts";
