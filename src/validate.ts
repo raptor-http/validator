@@ -11,7 +11,7 @@ declare global {
       schema: T,
     ): Promise<InferSchema<T>>;
   }
-};
+}
 
 type InferRule<R extends string> = R extends `${string}string${string}` ? string
   : R extends `${string}number${string}` ? number
@@ -99,7 +99,7 @@ export default class Validate {
       configurable: false,
     });
   }
-};
+}
 
 /**
  * Get and cache the request body.
@@ -127,4 +127,4 @@ async function getRequestBody(request: Request): Promise<unknown> {
   bodyCache.set(request, body);
 
   return body;
-};
+}
