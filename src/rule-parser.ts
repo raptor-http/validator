@@ -10,11 +10,21 @@ import IntegerRule from "./rules/integer.ts";
 import LowercaseRule from "./rules/lowercase.ts";
 import UppercaseRule from "./rules/uppercase.ts";
 import EmailRule from "./rules/email.ts";
+import ArrayRule from "./rules/array.ts";
+import JsonRule from "./rules/json.ts";
+import AlphaNumRule from "./rules/alpha-numeric.ts";
+import AlphaDashRule from "./rules/alpha-dash.ts";
+import UrlRule from "./rules/url.ts";
+import DateRule from "./rules/date.ts";
 
 import minFactory from "./rules/min.ts";
 import maxFactory from "./rules/max.ts";
 import startsWithFactory from "./rules/starts-with.ts";
 import endsWithFactory from "./rules/ends-with.ts";
+import greaterThanFactory from "./rules/greater-than.ts";
+import greaterThanOrEqualFactory from "./rules/greater-than-or-equal.ts";
+import lessThanFactory from "./rules/less-than.ts";
+import lessThanOrEqualFactory from "./rules/less-than-or-equal.ts";
 
 /**
  * Parses and manages validation rules.
@@ -141,6 +151,12 @@ export default class RuleParser {
     this.register(new LowercaseRule());
     this.register(new UppercaseRule());
     this.register(new EmailRule());
+    this.register(new ArrayRule());
+    this.register(new JsonRule());
+    this.register(new AlphaNumRule());
+    this.register(new AlphaDashRule());
+    this.register(new UrlRule());
+    this.register(new DateRule());
   }
 
   /**
@@ -151,5 +167,9 @@ export default class RuleParser {
     this.registerFactory("max", maxFactory);
     this.registerFactory("starts_with", startsWithFactory);
     this.registerFactory("ends_with", endsWithFactory);
+    this.registerFactory("gt", greaterThanFactory);
+    this.registerFactory("gte", greaterThanOrEqualFactory);
+    this.registerFactory("lt", lessThanFactory);
+    this.registerFactory("lte", lessThanOrEqualFactory);
   }
 }

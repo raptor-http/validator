@@ -227,6 +227,114 @@ Deno.test("validator handles invalid alpha field (with special chars)", () => {
   ]);
 });
 
+Deno.test("validator handles valid alpha_num field", () => {
+  const validator = new Validator();
+
+  const data = { username: "User123" };
+  const schema = { username: "alpha_num" };
+
+  const result = validator.validate(data, schema);
+
+  assertEquals(result.valid, true);
+  assertEquals(result.data, data);
+});
+
+Deno.test("validator handles valid alpha_num field with unicode", () => {
+  const validator = new Validator();
+
+  const data = { username: "José123" };
+  const schema = { username: "alpha_num" };
+
+  const result = validator.validate(data, schema);
+
+  assertEquals(result.valid, true);
+  assertEquals(result.data, data);
+});
+
+Deno.test("validator handles invalid alpha_num field (with spaces)", () => {
+  const validator = new Validator();
+
+  const data = { username: "User 123" };
+  const schema = { username: "alpha_num" };
+
+  const result = validator.validate(data, schema);
+
+  assertEquals(result.valid, false);
+  assertExists(result.errors);
+  assertEquals(result.errors?.username, [
+    "The username field must contain only letters and numbers",
+  ]);
+});
+
+Deno.test("validator handles invalid alpha_num field (with special chars)", () => {
+  const validator = new Validator();
+
+  const data = { username: "User-123" };
+  const schema = { username: "alpha_num" };
+
+  const result = validator.validate(data, schema);
+
+  assertEquals(result.valid, false);
+  assertExists(result.errors);
+  assertEquals(result.errors?.username, [
+    "The username field must contain only letters and numbers",
+  ]);
+});
+
+Deno.test("validator handles valid alpha_dash field", () => {
+  const validator = new Validator();
+
+  const data = { slug: "my-post_123" };
+  const schema = { slug: "alpha_dash" };
+
+  const result = validator.validate(data, schema);
+
+  assertEquals(result.valid, true);
+  assertEquals(result.data, data);
+});
+
+Deno.test("validator handles valid alpha_dash field with unicode", () => {
+  const validator = new Validator();
+
+  const data = { slug: "José-post_123" };
+  const schema = { slug: "alpha_dash" };
+
+  const result = validator.validate(data, schema);
+
+  assertEquals(result.valid, true);
+  assertEquals(result.data, data);
+});
+
+Deno.test("validator handles invalid alpha_dash field (with spaces)", () => {
+  const validator = new Validator();
+
+  const data = { slug: "my post 123" };
+  const schema = { slug: "alpha_dash" };
+
+  const result = validator.validate(data, schema);
+
+  assertEquals(result.valid, false);
+  assertExists(result.errors);
+  assertEquals(result.errors?.slug, [
+    "The slug field must contain only letters, numbers, dashes, and underscores",
+  ]);
+});
+
+Deno.test("validator handles invalid alpha_dash field (with special chars)", () => {
+  const validator = new Validator();
+
+  const data = { slug: "my@post" };
+  const schema = { slug: "alpha_dash" };
+
+  const result = validator.validate(data, schema);
+
+  assertEquals(result.valid, false);
+  assertExists(result.errors);
+  assertEquals(result.errors?.slug, [
+    "The slug field must contain only letters, numbers, dashes, and underscores",
+  ]);
+});
+
 Deno.test("validator handles valid lowercase field", () => {
   const validator = new Validator();
 
@@ -357,6 +465,507 @@ Deno.test("validator handles invalid email field (no TLD)", () => {
   assertExists(result.errors);
   assertEquals(result.errors?.email, [
     "The email field must be a valid email address",
+  ]);
+});
+
+Deno.test("validator handles valid url field", () => {
+  const validator = new Validator();
+
+  const data = { website: "https://example.com" };
+  const schema = { website: "url" };
+
+  const result = validator.validate(data, schema);
+
+  assertEquals(result.valid, true);
+  assertEquals(result.data, data);
+});
+
+Deno.test("validator handles valid url field with path", () => {
+  const validator = new Validator();
+
+  const data = { website: "https://example.com/path/to/page" };
+  const schema = { website: "url" };
+
+  const result = validator.validate(data, schema);
+
+  assertEquals(result.valid, true);
+  assertEquals(result.data, data);
+});
+
+Deno.test("validator handles valid url field with query params", () => {
+  const validator = new Validator();
+
+  const data = { website: "https://example.com?search=test&page=1" };
+  const schema = { website: "url" };
+
+  const result = validator.validate(data, schema);
+
+  assertEquals(result.valid, true);
+  assertEquals(result.data, data);
+});
+
+Deno.test("validator handles valid url field with http", () => {
+  const validator = new Validator();
+
+  const data = { website: "http://example.com" };
+  const schema = { website: "url" };
+
+  const result = validator.validate(data, schema);
+
+  assertEquals(result.valid, true);
+  assertEquals(result.data, data);
+});
+
+Deno.test("validator handles invalid url field (no protocol)", () => {
+  const validator = new Validator();
+
+  const data = { website: "example.com" };
+  const schema = { website: "url" };
+
+  const result = validator.validate(data, schema);
+
+  assertEquals(result.valid, false);
+  assertExists(result.errors);
+  assertEquals(result.errors?.website, [
+    "The website field must be a valid URL",
+  ]);
+});
+
+Deno.test("validator handles invalid url field (invalid protocol)", () => {
+  const validator = new Validator();
+
+  const data = { website: "ftp://example.com" };
+  const schema = { website: "url" };
+
+  const result = validator.validate(data, schema);
+
+  assertEquals(result.valid, false);
+  assertExists(result.errors);
+  assertEquals(result.errors?.website, [
+    "The website field must be a valid URL",
+  ]);
+});
+
+Deno.test("validator handles invalid url field (malformed)", () => {
+  const validator = new Validator();
+
+  const data = { website: "not a url" };
+  const schema = { website: "url" };
+
+  const result = validator.validate(data, schema);
+
+  assertEquals(result.valid, false);
+  assertExists(result.errors);
+  assertEquals(result.errors?.website, [
+    "The website field must be a valid URL",
+  ]);
+});
+
+Deno.test("validator handles valid array field", () => {
+  const validator = new Validator();
+
+  const data = { tags: ["tag1", "tag2", "tag3"] };
+  const schema = { tags: "array" };
+
+  const result = validator.validate(data, schema);
+
+  assertEquals(result.valid, true);
+  assertEquals(result.data, data);
+});
+
+Deno.test("validator handles valid empty array field", () => {
+  const validator = new Validator();
+
+  const data = { tags: [] };
+  const schema = { tags: "array" };
+
+  const result = validator.validate(data, schema);
+
+  assertEquals(result.valid, true);
+  assertEquals(result.data, data);
+});
+
+Deno.test("validator handles invalid array field (string)", () => {
+  const validator = new Validator();
+
+  const data = { tags: "not an array" };
+  const schema = { tags: "array" };
+
+  const result = validator.validate(data, schema);
+
+  assertEquals(result.valid, false);
+  assertExists(result.errors);
+  assertEquals(result.errors?.tags, ["The tags field must be an array"]);
+});
+
+Deno.test("validator handles invalid array field (object)", () => {
+  const validator = new Validator();
+
+  const data = { tags: { key: "value" } };
+  const schema = { tags: "array" };
+
+  const result = validator.validate(data, schema);
+
+  assertEquals(result.valid, false);
+  assertExists(result.errors);
+  assertEquals(result.errors?.tags, ["The tags field must be an array"]);
+});
+
+Deno.test("validator handles min length for array (valid)", () => {
+  const validator = new Validator();
+
+  const data = { tags: ["tag1", "tag2", "tag3"] };
+  const schema = { tags: "array|min:2" };
+
+  const result = validator.validate(data, schema);
+
+  assertEquals(result.valid, true);
+});
+
+Deno.test("validator handles min length for array (invalid)", () => {
+  const validator = new Validator();
+
+  const data = { tags: ["tag1"] };
+  const schema = { tags: "array|min:2" };
+
+  const result = validator.validate(data, schema);
+
+  assertEquals(result.valid, false);
+  assertExists(result.errors);
+  assertEquals(result.errors?.tags, [
+    "The tags field must be at least 2 in length",
+  ]);
+});
+
+Deno.test("validator handles max length for array (valid)", () => {
+  const validator = new Validator();
+
+  const data = { tags: ["tag1", "tag2"] };
+  const schema = { tags: "array|max:5" };
+
+  const result = validator.validate(data, schema);
+
+  assertEquals(result.valid, true);
+});
+
+Deno.test("validator handles max length for array (invalid)", () => {
+  const validator = new Validator();
+
+  const data = { tags: ["tag1", "tag2", "tag3", "tag4", "tag5", "tag6"] };
+  const schema = { tags: "array|max:5" };
+
+  const result = validator.validate(data, schema);
+
+  assertEquals(result.valid, false);
+  assertExists(result.errors);
+  assertEquals(result.errors?.tags, [
+    "The tags field must be less than 5 in length",
+  ]);
+});
+
+Deno.test("validator handles valid json field", () => {
+  const validator = new Validator();
+
+  const data = { config: '{"key": "value"}' };
+  const schema = { config: "json" };
+
+  const result = validator.validate(data, schema);
+
+  assertEquals(result.valid, true);
+  assertEquals(result.data, data);
+});
+
+Deno.test("validator handles valid json field (array)", () => {
+  const validator = new Validator();
+
+  const data = { config: '["item1", "item2"]' };
+  const schema = { config: "json" };
+
+  const result = validator.validate(data, schema);
+
+  assertEquals(result.valid, true);
+  assertEquals(result.data, data);
+});
+
+Deno.test("validator handles invalid json field", () => {
+  const validator = new Validator();
+
+  const data = { config: "not json" };
+  const schema = { config: "json" };
+
+  const result = validator.validate(data, schema);
+
+  assertEquals(result.valid, false);
+  assertExists(result.errors);
+  assertEquals(result.errors?.config, ["The config field must be valid JSON"]);
+});
+
+Deno.test("validator handles invalid json field (malformed)", () => {
+  const validator = new Validator();
+
+  const data = { config: '{"key": "value"' };
+  const schema = { config: "json" };
+
+  const result = validator.validate(data, schema);
+
+  assertEquals(result.valid, false);
+  assertExists(result.errors);
+  assertEquals(result.errors?.config, ["The config field must be valid JSON"]);
+});
+
+Deno.test("validator handles invalid json field (empty string)", () => {
+  const validator = new Validator();
+
+  const data = { config: "" };
+  const schema = { config: "json" };
+
+  const result = validator.validate(data, schema);
+
+  assertEquals(result.valid, false);
+  assertExists(result.errors);
+  assertEquals(result.errors?.config, ["The config field must be valid JSON"]);
+});
+
+Deno.test("validator handles valid date field (Date object)", () => {
+  const validator = new Validator();
+
+  const data = { created_at: new Date("2025-12-23") };
+  const schema = { created_at: "date" };
+
+  const result = validator.validate(data, schema);
+
+  assertEquals(result.valid, true);
+  assertEquals(result.data, data);
+});
+
+Deno.test("validator handles valid date field (ISO string)", () => {
+  const validator = new Validator();
+
+  const data = { created_at: "2025-12-23T10:30:00Z" };
+  const schema = { created_at: "date" };
+
+  const result = validator.validate(data, schema);
+
+  assertEquals(result.valid, true);
+  assertEquals(result.data, data);
+});
+
+Deno.test("validator handles valid date field (date string)", () => {
+  const validator = new Validator();
+
+  const data = { created_at: "December 23, 2025" };
+  const schema = { created_at: "date" };
+
+  const result = validator.validate(data, schema);
+
+  assertEquals(result.valid, true);
+  assertEquals(result.data, data);
+});
+
+Deno.test("validator handles invalid date field (string)", () => {
+  const validator = new Validator();
+
+  const data = { created_at: "not a date" };
+  const schema = { created_at: "date" };
+
+  const result = validator.validate(data, schema);
+
+  assertEquals(result.valid, false);
+  assertExists(result.errors);
+  assertEquals(result.errors?.created_at, [
+    "The created_at field must be a valid date",
+  ]);
+});
+
+Deno.test("validator handles invalid date field (invalid date)", () => {
+  const validator = new Validator();
+
+  const data = { created_at: "2023-13-45" };
+  const schema = { created_at: "date" };
+
+  const result = validator.validate(data, schema);
+
+  assertEquals(result.valid, false);
+  assertExists(result.errors);
+  assertEquals(result.errors?.created_at, [
+    "The created_at field must be a valid date",
+  ]);
+});
+
+Deno.test("validator handles invalid date field (number)", () => {
+  const validator = new Validator();
+
+  const data = { created_at: 12345 };
+  const schema = { created_at: "date" };
+
+  const result = validator.validate(data, schema);
+
+  assertEquals(result.valid, false);
+  assertExists(result.errors);
+  assertEquals(result.errors?.created_at, [
+    "The created_at field must be a valid date",
+  ]);
+});
+
+Deno.test("validator handles valid gt field", () => {
+  const validator = new Validator();
+
+  const data = { score: 85 };
+  const schema = { score: "numeric|gt:50" };
+
+  const result = validator.validate(data, schema);
+
+  assertEquals(result.valid, true);
+  assertEquals(result.data, data);
+});
+
+Deno.test("validator handles invalid gt field (equal)", () => {
+  const validator = new Validator();
+
+  const data = { score: 50 };
+  const schema = { score: "numeric|gt:50" };
+
+  const result = validator.validate(data, schema);
+
+  assertEquals(result.valid, false);
+  assertExists(result.errors);
+  assertEquals(result.errors?.score, [
+    "The score field must be greater than 50",
+  ]);
+});
+
+Deno.test("validator handles invalid gt field (less)", () => {
+  const validator = new Validator();
+
+  const data = { score: 30 };
+  const schema = { score: "numeric|gt:50" };
+
+  const result = validator.validate(data, schema);
+
+  assertEquals(result.valid, false);
+  assertExists(result.errors);
+  assertEquals(result.errors?.score, [
+    "The score field must be greater than 50",
+  ]);
+});
+
+Deno.test("validator handles valid gte field", () => {
+  const validator = new Validator();
+
+  const data = { age: 18 };
+  const schema = { age: "numeric|gte:18" };
+
+  const result = validator.validate(data, schema);
+
+  assertEquals(result.valid, true);
+  assertEquals(result.data, data);
+});
+
+Deno.test("validator handles valid gte field (greater)", () => {
+  const validator = new Validator();
+
+  const data = { age: 25 };
+  const schema = { age: "numeric|gte:18" };
+
+  const result = validator.validate(data, schema);
+
+  assertEquals(result.valid, true);
+  assertEquals(result.data, data);
+});
+
+Deno.test("validator handles invalid gte field", () => {
+  const validator = new Validator();
+
+  const data = { age: 16 };
+  const schema = { age: "numeric|gte:18" };
+
+  const result = validator.validate(data, schema);
+
+  assertEquals(result.valid, false);
+  assertExists(result.errors);
+  assertEquals(result.errors?.age, [
+    "The age field must be greater than or equal to 18",
+  ]);
+});
+
+Deno.test("validator handles valid lt field", () => {
+  const validator = new Validator();
+
+  const data = { score: 75 };
+  const schema = { score: "numeric|lt:100" };
+
+  const result = validator.validate(data, schema);
+
+  assertEquals(result.valid, true);
+  assertEquals(result.data, data);
+});
+
+Deno.test("validator handles invalid lt field (equal)", () => {
+  const validator = new Validator();
+
+  const data = { score: 100 };
+  const schema = { score: "numeric|lt:100" };
+
+  const result = validator.validate(data, schema);
+
+  assertEquals(result.valid, false);
+  assertExists(result.errors);
+  assertEquals(result.errors?.score, [
+    "The score field must be less than 100",
+  ]);
+});
+
+Deno.test("validator handles invalid lt field (greater)", () => {
+  const validator = new Validator();
+
+  const data = { score: 150 };
+  const schema = { score: "numeric|lt:100" };
+
+  const result = validator.validate(data, schema);
+
+  assertEquals(result.valid, false);
+  assertExists(result.errors);
+  assertEquals(result.errors?.score, [
+    "The score field must be less than 100",
+  ]);
+});
+
+Deno.test("validator handles valid lte field", () => {
+  const validator = new Validator();
+
+  const data = { percentage: 100 };
+  const schema = { percentage: "numeric|lte:100" };
+
+  const result = validator.validate(data, schema);
+
+  assertEquals(result.valid, true);
+  assertEquals(result.data, data);
+});
+
+Deno.test("validator handles valid lte field (less)", () => {
+  const validator = new Validator();
+
+  const data = { percentage: 75 };
+  const schema = { percentage: "numeric|lte:100" };
+
+  const result = validator.validate(data, schema);
+
+  assertEquals(result.valid, true);
+  assertEquals(result.data, data);
+});
+
+Deno.test("validator handles invalid lte field", () => {
+  const validator = new Validator();
+
+  const data = { percentage: 150 };
+  const schema = { percentage: "numeric|lte:100" };
+
+  const result = validator.validate(data, schema);
+
+  assertEquals(result.valid, false);
+  assertExists(result.errors);
+  assertEquals(result.errors?.percentage, [
+    "The percentage field must be less than or equal to 100",
   ]);
 });
 
@@ -692,6 +1301,38 @@ Deno.test("validator handles complex scenario with new rules", () => {
     website: "required|starts_with:http,https",
     price: "required|decimal",
     quantity: "required|integer",
+  };
+
+  const result = validator.validate(data, schema);
+
+  assertEquals(result.valid, true);
+  assertEquals(result.data, data);
+  assertEquals(result.errors, undefined);
+});
+
+Deno.test("validator handles comprehensive scenario with all new rules", () => {
+  const validator = new Validator();
+
+  const data = {
+    username: "user123",
+    slug: "my-awesome-post_2025",
+    tags: ["javascript", "typescript", "deno"],
+    config: '{"theme": "dark"}',
+    website: "https://example.com",
+    created_at: "2025-12-23T10:30:00Z",
+    age: 25,
+    score: 85.5,
+  };
+
+  const schema = {
+    username: "required|alpha_num|lowercase",
+    slug: "required|alpha_dash",
+    tags: "required|array|min:1|max:5",
+    config: "required|json",
+    website: "required|url",
+    created_at: "required|date",
+    age: "required|integer|gte:18|lte:100",
+    score: "required|decimal|gt:0|lt:100",
   };
 
   const result = validator.validate(data, schema);
