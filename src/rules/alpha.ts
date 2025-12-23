@@ -26,7 +26,7 @@ export default class AlphaRule implements Rule {
     }
 
     const alphaRegex = /^[\p{L}\p{M}]+$/u;
-    
+
     return alphaRegex.test(value);
   }
 
