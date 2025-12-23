@@ -1,11 +1,20 @@
 import type { Rule, RuleFactory } from "./interfaces/rule.ts";
 
 import StringRule from "./rules/string.ts";
-import NumberRule from "./rules/number.ts";
+import NumericRule from "./rules/numeric.ts";
 import BooleanRule from "./rules/boolean.ts";
 import RequiredRule from "./rules/required.ts";
+import AlphaRule from "./rules/alpha.ts";
+import DecimalRule from "./rules/decimal.ts";
+import IntegerRule from "./rules/integer.ts";
+import LowercaseRule from "./rules/lowercase.ts";
+import UppercaseRule from "./rules/uppercase.ts";
+import EmailRule from "./rules/email.ts";
+
 import minFactory from "./rules/min.ts";
 import maxFactory from "./rules/max.ts";
+import startsWithFactory from "./rules/starts-with.ts";
+import endsWithFactory from "./rules/ends-with.ts";
 
 /**
  * Parses and manages validation rules.
@@ -56,17 +65,18 @@ export default class RuleParser {
    */
   public parse(ruleString: string): Rule[] {
     const ruleNames = ruleString.split("|").map((r) => r.trim());
+
     const parsedRules: Rule[] = [];
 
     for (const ruleName of ruleNames) {
-      // Check if this is a parameterized rule (contains ":")
       if (ruleName.includes(":")) {
         const rule = this.parseParameterizedRule(ruleName);
+
         parsedRules.push(rule);
+
         continue;
       }
 
-      // Try to find a non-parameterized rule
       const rule = this.rules.get(ruleName);
 
       if (!rule) {
@@ -87,6 +97,7 @@ export default class RuleParser {
    */
   private parseParameterizedRule(ruleString: string): Rule {
     const [name, ...paramParts] = ruleString.split(":");
+
     const params = paramParts.join(":").split(",").map((p) => p.trim());
 
     const factory = this.factories.get(name);
@@ -109,6 +120,7 @@ export default class RuleParser {
   public has(ruleName: string): boolean {
     if (ruleName.includes(":")) {
       const [name] = ruleName.split(":");
+
       return this.factories.has(name);
     }
 
@@ -121,8 +133,14 @@ export default class RuleParser {
   private registerDefaultRules(): void {
     this.register(new RequiredRule());
     this.register(new StringRule());
-    this.register(new NumberRule());
+    this.register(new NumericRule());
     this.register(new BooleanRule());
+    this.register(new DecimalRule());
+    this.register(new IntegerRule());
+    this.register(new AlphaRule());
+    this.register(new LowercaseRule());
+    this.register(new UppercaseRule());
+    this.register(new EmailRule());
   }
 
   /**
@@ -131,5 +149,7 @@ export default class RuleParser {
   private registerDefaultFactories(): void {
     this.registerFactory("min", minFactory);
     this.registerFactory("max", maxFactory);
+    this.registerFactory("starts_with", startsWithFactory);
+    this.registerFactory("ends_with", endsWithFactory);
   }
 }

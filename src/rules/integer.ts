@@ -1,11 +1,11 @@
 import type { Rule } from "../interfaces/rule.ts";
 
 /**
- * Validates that a field is a number.
+ * Validates that a field is an integer.
  */
-export default class NumberRule implements Rule {
+export default class IntegerRule implements Rule {
   public name(): string {
-    return "number";
+    return "integer";
   }
 
   public validate(
@@ -17,10 +17,14 @@ export default class NumberRule implements Rule {
       return true;
     }
 
-    return typeof value === "number" && !isNaN(value);
+    if (typeof value !== "number" || isNaN(value)) {
+      return false;
+    }
+
+    return Number.isInteger(value);
   }
 
   public message(field: string): string {
-    return `The ${field} field must be a number`;
+    return `The ${field} field must be an integer`;
   }
 }
