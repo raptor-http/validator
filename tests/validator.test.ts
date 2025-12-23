@@ -1,4 +1,4 @@
-import { Validator } from "../mod.ts";
+import Validator from "../src/validator.ts";
 import { assertEquals, assertExists } from "@std/assert";
 
 Deno.test("validator handles valid string field", () => {
