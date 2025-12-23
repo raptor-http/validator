@@ -1,2 +1,5 @@
 # Ignore example directory.
 examples
+
+# Ignore types file.
+types.d.ts
