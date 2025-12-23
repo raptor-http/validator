@@ -19,17 +19,14 @@ class MinRule implements Rule {
       return true;
     }
 
-    // For strings, check length
     if (typeof value === "string") {
       return value.length >= this.minimum;
     }
 
-    // For numbers, check value
     if (typeof value === "number") {
       return value >= this.minimum;
     }
 
-    // For arrays, check length
     if (Array.isArray(value)) {
       return value.length >= this.minimum;
     }
@@ -63,5 +60,4 @@ export class MinRuleFactory implements RuleFactory {
   }
 }
 
-// Export an instance of the factory
-export default new MinRuleFactory();
+export default new MinRuleFactory() as RuleFactory;

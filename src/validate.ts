@@ -55,7 +55,7 @@ export default class Validate {
    * @param context The current HTTP context.
    * @param next The next middleware function.
    */
-  public handle(context: Context, next: CallableFunction) {
+  public handle(context: Context, next: CallableFunction): CallableFunction {
     const { request } = context;
 
     if (!(kValidate in request)) {
@@ -93,8 +93,8 @@ export default class Validate {
     });
 
     Object.defineProperty(request, "validate", {
-      get() {
-        return (this as any)[kValidate];
+      get(this: Request) {
+        return (this as unknown as Record<symbol, unknown>)[kValidate];
       },
       configurable: false,
     });

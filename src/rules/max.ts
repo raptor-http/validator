@@ -19,17 +19,14 @@ class MaxRule implements Rule {
       return true;
     }
 
-    // For strings, check length
     if (typeof value === "string") {
       return value.length <= this.maximum;
     }
 
-    // For numbers, check value
     if (typeof value === "number") {
       return value <= this.maximum;
     }
 
-    // For arrays, check length
     if (Array.isArray(value)) {
       return value.length <= this.maximum;
     }
@@ -63,5 +60,4 @@ export class MaxRuleFactory implements RuleFactory {
   }
 }
 
-// Export an instance of the factory
-export default new MaxRuleFactory();
+export default new MaxRuleFactory() as RuleFactory;
